@@ -2,4 +2,3 @@ discord
 qrcode
 pillow
 robloxapi
-sqlite3
