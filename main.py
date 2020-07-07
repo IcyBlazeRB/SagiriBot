@@ -3,20 +3,26 @@ import os
 import json
 from discord.ext import commands
 
+
+
 def get_prefix(client, message):
+        if not message.guild:
+                return commands.when_mentioned_or("uwu ")(client, message)
+
         with open("prefixes.json","r") as f:
                 prefixes = json.load(f)
         
         return prefixes[str(message.guild.id)]
 
 client = commands.Bot(command_prefix=get_prefix)
+client.remove_command("help")
 
 @client.event
 async def on_guild_join(guild):
         with open("prefixes.json","r") as f:
                 prefixes = json.load(f)
         
-        prefixes[str(guild.id)] = "uwu "
+        prefixes[str(guild.id)] = "owo "
 
         with open("prefixes.json","w") as f:
                 json.dump(prefixes, f, indent=4)
