@@ -1,4 +1,3 @@
 discord
 qrcode
 pillow
-JSON
