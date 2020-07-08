@@ -66,6 +66,18 @@ class moderation(commands.Cog):
                         await ctx.send("**You are missing an argument. Correct format ``'uwu warn [user] [reason]'``.**")
                 if isinstance(error, commands.MissingPermissions):
                         await ctx.send("**You are missing the required permissions, or the user you are attempting to kick is higher then me.**")
+        
+        @commands.command(pass_context=True)
+        @commands.has_permissions(administrator=True)
+        async def purge(self, ctx, limit: int):
+                await ctx.channel.purge(limit=limit)
+                await ctx.send('Cleared by {}'.format(ctx.author.mention))
+                await ctx.message.delete()
+
+        @purge.error
+        async def clear_error(self, ctx, error):
+                if isinstance(error, commands.MissingPermissions):
+                        await ctx.send("You cant do that!")
 
 
                         
