@@ -33,6 +33,9 @@ class roblox(commands.Cog):
                 for row in data:
                         drid=str(row[1])
                 
+                detailed = await ira.get_detailed_user()
+                friends = await ira.get_friends()
+                fira = await sart.get_user_by_username(ira.name)
 
                 rig = "Guest"
                 members = []
@@ -40,15 +43,19 @@ class roblox(commands.Cog):
                 async for member in grape.get_members():
                         members.append(member.name)
                 if args in members:
-                        rig = await ira.get_role_in_group(6814798)
+                        rig = await fira.get_role_in_group(6814798)
                         rig = rig.name
-                embed=discord.Embed(title="Roblox Info")
+                embed=discord.Embed(title="Roblox Info", color=0xd90d0d)
                 embed.set_thumbnail(url="http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="+args)
                 embed.add_field(name="Username", value=str(ira.name), inline=True)
                 embed.add_field(name="UserID", value=str(ira.id), inline=True)
                 embed.add_field(name="Group Role", value=rig, inline=True)
+                embed.add_field(name="Join Date", value=detailed.join_date, inline=True)
+                embed.add_field(name="Friends", value=str(len(friends)), inline=True)
                 embed.add_field(name="Discord", value="<@!"+drid+">", inline=True)
+
                 await ctx.send(embed=embed)
+
         @commands.command()
         async def bind(self, ctx):
                 #Important Variables
@@ -128,6 +135,9 @@ class roblox(commands.Cog):
 
                         elif msg.content == "no":
                                 await ctx.send("**Please try again.**")
+                else:
+                        ctx.send("**Error:** ``Found in database!``")
+
 
 def setup(client):
         client.add_cog(roblox(client))
