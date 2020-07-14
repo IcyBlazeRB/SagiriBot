@@ -14,7 +14,7 @@ def get_prefix(client, message):
         
         return prefixes[str(message.guild.id)]
 
-client = commands.Bot(command_prefix=get_prefix and commands.when_mentioned_or("owo ")) 
+client = commands.Bot(command_prefix=get_prefix and commands.when_mentioned_or("uwu ")) 
 client.remove_command("help")
 
 @client.event
