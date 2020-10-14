@@ -4,6 +4,26 @@ from discord.ext import commands
 import os
 import time
 import json
+import random
+import ast
+from gtts import gTTS
+
+
+def insert_returns(body):
+    # insert return stmt if the last expression is a expression statement
+    if isinstance(body[-1], ast.Expr):
+        body[-1] = ast.Return(body[-1].value)
+        ast.fix_missing_locations(body[-1])
+
+    # for if statements, we insert returns into the body and the orelse
+    if isinstance(body[-1], ast.If):
+        insert_returns(body[-1].body)
+        insert_returns(body[-1].orelse)
+
+    # for with blocks, again we insert returns into the body
+    if isinstance(body[-1], ast.With):
+        insert_returns(body[-1].body)
+
 
 
 
@@ -20,6 +40,18 @@ class useful(commands.Cog):
         async def say(self, ctx, *, arg):
                 await ctx.send(arg)
         
+        @commands.command()
+        async def tts(self, ctx, *, arg):
+                tts = gTTS(arg)
+                tts.save('TTS.mp3')
+                audio = discord.File("TTS.mp3")
+                await ctx.send(
+                        "Here is what you said!",
+                        file=audio
+                )
+                os.remove("TTS.mp3")
+
+
         @commands.command()
         async def avatar(self, ctx, member: discord.Member=None):  
                 if not member:
@@ -87,6 +119,9 @@ class useful(commands.Cog):
                 embed=discord.Embed(title="Click here to invite me!", url="https://discord.com/oauth2/authorize?client_id=566852738345074689&scope=bot&permissions=8")
                 await ctx.send(embed=embed)
 
+        
+        
+
         @commands.command()
         async def help(self, ctx):
                 embed1=discord.Embed(title="Moderation Commands", color=0xd100ca)
@@ -111,6 +146,7 @@ class useful(commands.Cog):
                 embed3.add_field(name="Die", value="Will role a die.", inline=False)
                 embed3.add_field(name="Flip", value="Will flip a coin.", inline=False)
                 embed3.add_field(name="Fortune", value="Will tell your fortune.", inline=False)
+                embed3.add_field(name="Cat", value="Kawaii Neko Images!!! 😸", inline=False)
                 embed3.set_footer(text="Note: Most of these commands require permissions")
                 await ctx.message.author.send(embed=embed1)
                 await ctx.message.author.send(embed=embed2)
