@@ -8,3 +8,7 @@ hentai
 asyncio
 requests
 faker
+aiohttp
+requests
+setuptools
+simplejson
