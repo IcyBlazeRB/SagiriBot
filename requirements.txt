@@ -5,10 +5,4 @@ robloxapi
 gtts
 jikanpy
 hentai
-asyncio
 requests
-faker
-aiohttp
-requests
-setuptools
-simplejson
