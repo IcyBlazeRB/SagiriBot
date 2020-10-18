@@ -5,3 +5,5 @@ robloxapi
 gtts
 jikanpy
 hentai
+asyncio
+requests
